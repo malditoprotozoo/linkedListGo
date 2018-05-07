@@ -151,6 +151,21 @@ func (list *List) ShowFirst(item int) int {
 	return -1
 }
 
+// First : Show the first Node
+func (list *List) First() {
+	fmt.Printf("The first node on the list is %d at the position %d \n", list.start.body, list.start.pos)
+}
+
+// Last : Show the position after the last node
+func (list *List) Last() {
+	for list.start != nil {
+		if list.start.pos == list.length-1 {
+			fmt.Printf("The position after the last node is %d \n", list.start.pos+1)
+		}
+		list.start = list.start.next
+	}
+}
+
 func main() {
 	MyList := &List{}
 	fmt.Println("How many nodes do you want?")
@@ -174,7 +189,9 @@ func main() {
 		6. Show the first iterarion of a Node 
 		7. Insert node in given position
 		8. Remove a node
-		9. Remove all items`)
+		9. Remove all items
+		10. Show the first node on the list
+		11. Show the position after the last node`)
 	var command int
 	fmt.Scanln(&command)
 	if command == 1 {
@@ -242,6 +259,10 @@ func main() {
 	} else if command == 9 {
 		MyList.CleanList()
 		MyList.Show()
+	} else if command == 10 {
+		MyList.First()
+	} else if command == 11 {
+		MyList.Last()
 	} else {
 		fmt.Println("Command not Found")
 	}
