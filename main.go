@@ -53,26 +53,31 @@ func (list *List) Insert(node, pos int) {
 
 // Show : Show all Nodes on List
 func (list *List) Show() {
-	totalNodes := 0
-	fmt.Println("This is the data that was entered on the list:")
-	for list.start != nil {
-		fmt.Printf("Data = %+v \n", list.start.body)
-		list.start = list.start.next
-		totalNodes++
+	length := 0
+	start := list.start
+	fmt.Println("The nodes on the list are:")
+	if start != nil {
+		for start != nil {
+			fmt.Printf("Data = %d \n", start.body)
+			length++
+			start = start.next
+		}
+	} else {
+		fmt.Println("The list is empty")
 	}
-	list.length = totalNodes
-	fmt.Printf("Total number of nodes = %d \n", list.length)
+	list.length = length
 }
 
 // Find : Find item on the list
 func (list *List) Find(item int) int {
 	index := 0
-	for list.start != nil {
-		if list.start.body != item {
-			list.start = list.start.next
+	start := list.start
+	for start != nil {
+		if start.body != item {
+			start = start.next
 		} else {
-			fmt.Printf("The item is in the position %d \n", list.start.pos)
-			list.start = list.start.next
+			fmt.Printf("The item %d is in the position %d \n", item, start.pos)
+			start = start.next
 			index++
 		}
 	}
@@ -84,11 +89,12 @@ func (list *List) Find(item int) int {
 
 // FindWithPos : Find what item is in a given position
 func (list *List) FindWithPos(pos int) int {
-	for list.start != nil {
-		if list.start.pos == pos {
-			return list.start.body
+	start := list.start
+	for start != nil {
+		if start.pos == pos {
+			return start.body
 		}
-		list.start = list.start.next
+		start = start.next
 	}
 	return -1
 }
@@ -124,33 +130,36 @@ func (list *List) CleanList() {
 
 // ShowNext : Show the item that comes next to given position
 func (list *List) ShowNext(pos int) int {
-	for list.start != nil {
-		if list.start.pos == pos+1 {
-			return list.start.body
+	start := list.start
+	for start != nil {
+		if start.pos == pos+1 {
+			return start.body
 		}
-		list.start = list.start.next
+		start = start.next
 	}
 	return -1
 }
 
 // ShowPrev : Show the item that comes before togiven position
 func (list *List) ShowPrev(pos int) int {
-	for list.start != nil {
-		if list.start.pos == pos-1 {
-			return list.start.body
+	start := list.start
+	for start != nil {
+		if start.pos == pos-1 {
+			return start.body
 		}
-		list.start = list.start.next
+		start = start.next
 	}
 	return -1
 }
 
 // ShowFirst : Show the first iteration of a Node
 func (list *List) ShowFirst(item int) int {
-	for list.start != nil {
-		if list.start.body == item {
-			return list.start.pos
+	start := list.start
+	for start != nil {
+		if start.body == item {
+			return start.pos
 		}
-		list.start = list.start.next
+		start = start.next
 	}
 	return -1
 }
@@ -162,30 +171,13 @@ func (list *List) First() {
 
 // Last : Show the position after the last node
 func (list *List) Last() {
-	for list.start != nil {
-		if list.start.pos == list.length-1 {
-			fmt.Printf("The position after the last node is %d \n", list.start.pos+1)
+	start := list.start
+	for start != nil {
+		if start.pos == list.length-1 {
+			fmt.Printf("The position after the last node is %d \n", start.pos+1)
 		}
-		list.start = list.start.next
+		start = start.next
 	}
-}
-
-// Backwards : Show the list backwards
-func (list *List) Backwards() {
-	prev := new(Node)
-	prev = nil
-	current := new(Node)
-	current = list.start
-	next := new(Node)
-	next = nil
-	for current != nil {
-		next = current.next
-		current.next = prev
-		prev = current
-		current = next
-	}
-	list.start = prev
-	list.Show()
 }
 
 func main() {
@@ -201,92 +193,92 @@ func main() {
 		addNode.body = node
 		MyList.Append(addNode)
 	}
-	fmt.Println(`
-		Write the number of what you want to do now: 
-		1. Show My List 
-		2. Search An Item 
-		3. Search What Item is in Given Position 
-		4. Show the item that comes next a position 
-		5. Show the item that comes before a position 
-		6. Show the first iterarion of a Node 
-		7. Insert node in given position
-		8. Remove a node
-		9. Remove all items
-		10. Show the first node on the list
-		11. Show the position after the last node
-		12. Show the list backwards`)
-	var command int
-	fmt.Scanln(&command)
-	if command == 1 {
-		MyList.Show()
-	} else if command == 2 {
-		fmt.Println("Search your Data")
-		var search int
-		fmt.Scanln(&search)
-		if MyList.Find(search) < 0 {
-			fmt.Println("Item not Found")
-		}
-	} else if command == 3 {
-		fmt.Println("Write the position")
-		var pos int
-		fmt.Scanln(&pos)
-		if MyList.FindWithPos(pos) < 0 {
-			fmt.Println("Position Unavailable")
+	for {
+		fmt.Println(`
+			Write the number of what you want to do now: 
+			1. Show My List 
+			2. Search An Item 
+			3. Search What Item is in Given Position 
+			4. Show the item that comes next a position 
+			5. Show the item that comes before a position 
+			6. Show the first iterarion of a Node 
+			7. Insert node in given position
+			8. Remove a node
+			9. Remove all items
+			10. Show the first node on the list
+			11. Show the position after the last node
+			12. Show the list backwards`)
+		var command int
+		fmt.Scanln(&command)
+		if command == 1 {
+			MyList.Show()
+		} else if command == 2 {
+			fmt.Println("Search your Data")
+			var search int
+			fmt.Scanln(&search)
+			if MyList.Find(search) < 0 {
+				fmt.Println("Item not Found")
+			}
+		} else if command == 3 {
+			fmt.Println("Write the position")
+			var pos int
+			fmt.Scanln(&pos)
+			if MyList.FindWithPos(pos) < 0 {
+				fmt.Println("Position Unavailable")
+			} else {
+				fmt.Printf("In position %d there is the data %d \n", pos, MyList.FindWithPos(pos))
+			}
+		} else if command == 4 {
+			fmt.Println("Write a Position")
+			var pos int
+			fmt.Scanln(&pos)
+			if MyList.ShowNext(pos) < 0 {
+				fmt.Println("Position Unavailable")
+			} else {
+				fmt.Printf("In position %d there is the data %d \n", pos+1, MyList.ShowNext(pos))
+			}
+		} else if command == 5 {
+			fmt.Println("Write a Position")
+			var pos int
+			fmt.Scanln(&pos)
+			if MyList.ShowPrev(pos) < 0 {
+				fmt.Println("Position Unavailable")
+			} else {
+				fmt.Printf("In position %d there is the item %d \n", pos-1, MyList.ShowPrev(pos))
+			}
+		} else if command == 6 {
+			fmt.Println("What Node are you Looking For?")
+			var node int
+			fmt.Scanln(&node)
+			if MyList.ShowFirst(node) < 0 {
+				fmt.Println("That Node is not in the List")
+			} else {
+				fmt.Printf("The first iteration of node %d is in the position %d \n", node, MyList.ShowFirst(node))
+			}
+		} else if command == 7 {
+			fmt.Println("Add a Node")
+			var node int
+			fmt.Scanln(&node)
+			fmt.Println("In what position?")
+			var pos int
+			fmt.Scanln(&pos)
+			MyList.Insert(node, pos)
+			MyList.Show()
+		} else if command == 8 {
+			fmt.Println("Select a position")
+			var pos int
+			fmt.Scanln(&pos)
+			MyList.RemoveItem(pos)
+			MyList.Show()
+		} else if command == 9 {
+			MyList.CleanList()
+			MyList.Show()
+		} else if command == 10 {
+			MyList.First()
+		} else if command == 11 {
+			MyList.Last()
 		} else {
-			fmt.Printf("In position %d there is the data %d \n", pos, MyList.FindWithPos(pos))
+			fmt.Println("Command not Found")
 		}
-	} else if command == 4 {
-		fmt.Println("Write a Position")
-		var pos int
-		fmt.Scanln(&pos)
-		if MyList.ShowNext(pos) < 0 {
-			fmt.Println("Position Unavailable")
-		} else {
-			fmt.Printf("In position %d there is the data %d \n", pos+1, MyList.ShowNext(pos))
-		}
-	} else if command == 5 {
-		fmt.Println("Write a Position")
-		var pos int
-		fmt.Scanln(&pos)
-		if MyList.ShowPrev(pos) < 0 {
-			fmt.Println("Position Unavailable")
-		} else {
-			fmt.Printf("In position %d there is the data %d \n", pos-1, MyList.ShowNext(pos))
-		}
-	} else if command == 6 {
-		fmt.Println("What Node are you Looking For?")
-		var node int
-		fmt.Scanln(&node)
-		if MyList.ShowFirst(node) < 0 {
-			fmt.Println("That Node is not in the List")
-		} else {
-			fmt.Printf("The first iteration of node %d is in the position %d \n", node, MyList.ShowFirst(node))
-		}
-	} else if command == 7 {
-		fmt.Println("Add a Node")
-		var node int
-		fmt.Scanln(&node)
-		fmt.Println("In what position?")
-		var pos int
-		fmt.Scanln(&pos)
-		MyList.Insert(node, pos)
-		MyList.Show()
-	} else if command == 8 {
-		fmt.Println("Select a position")
-		var pos int
-		fmt.Scanln(&pos)
-		MyList.RemoveItem(pos)
-		MyList.Show()
-	} else if command == 9 {
-		MyList.CleanList()
-		MyList.Show()
-	} else if command == 10 {
-		MyList.First()
-	} else if command == 11 {
-		MyList.Last()
-	} else if command == 12 {
-		MyList.Backwards()
-	} else {
-		fmt.Println("Command not Found")
 	}
 }
