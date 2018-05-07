@@ -44,7 +44,7 @@ func (list *List) Insert(node, pos int) {
 	}
 	newNode2 := new(Node)
 	newNode2 = list.start
-	for i := 0; i < pos; i++ {
+	for i := 0; i < pos-1; i++ {
 		newNode2 = newNode2.next
 	}
 	newNode.next = newNode2.next
