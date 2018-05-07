@@ -69,11 +69,15 @@ func (list *List) Find(item int) int {
 	index := 0
 	for list.start != nil {
 		if list.start.body != item {
-			index++
 			list.start = list.start.next
 		} else {
-			return list.start.pos
+			fmt.Printf("The item is in the position %d \n", list.start.pos)
+			list.start = list.start.next
+			index++
 		}
+	}
+	if index != 0 {
+		return index
 	}
 	return -1
 }
@@ -221,8 +225,6 @@ func main() {
 		fmt.Scanln(&search)
 		if MyList.Find(search) < 0 {
 			fmt.Println("Item not Found")
-		} else {
-			fmt.Printf("The index of %d is %v \n", search, MyList.Find(search))
 		}
 	} else if command == 3 {
 		fmt.Println("Write the position")
