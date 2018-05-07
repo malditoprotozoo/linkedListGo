@@ -111,6 +111,13 @@ func (list *List) RemoveItem(pos int) {
 	newNode.next = newNode2
 }
 
+// CleanList : Removes all items
+func (list *List) CleanList() {
+	for list.start != nil {
+		list.start = nil
+	}
+}
+
 // ShowNext : Show the item that comes next to given position
 func (list *List) ShowNext(pos int) int {
 	for list.start != nil {
@@ -166,7 +173,8 @@ func main() {
 		5. Show the item that comes before a position 
 		6. Show the first iterarion of a Node 
 		7. Insert node in given position
-		8. Remove a node`)
+		8. Remove a node
+		9. Remove all items`)
 	var command int
 	fmt.Scanln(&command)
 	if command == 1 {
@@ -230,6 +238,9 @@ func main() {
 		var pos int
 		fmt.Scanln(&pos)
 		MyList.RemoveItem(pos)
+		MyList.Show()
+	} else if command == 9 {
+		MyList.CleanList()
 		MyList.Show()
 	} else {
 		fmt.Println("Command not Found")
