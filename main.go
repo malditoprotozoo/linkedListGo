@@ -53,11 +53,14 @@ func (list *List) Insert(node, pos int) {
 
 // Show : Show all Nodes on List
 func (list *List) Show() {
+	totalNodes := 0
 	fmt.Println("This is the data that was entered on the list:")
 	for list.start != nil {
 		fmt.Printf("Data = %+v \n", list.start.body)
 		list.start = list.start.next
+		totalNodes++
 	}
+	list.length = totalNodes
 	fmt.Printf("Total number of nodes = %d \n", list.length)
 }
 
@@ -88,7 +91,24 @@ func (list *List) FindWithPos(pos int) int {
 
 // RemoveItem : Remove item in given position
 func (list *List) RemoveItem(pos int) {
-
+	if list.start == nil {
+		return
+	}
+	newNode := new(Node)
+	newNode = list.start
+	if pos == 0 {
+		list.start = list.start.next
+		return
+	}
+	for i := 0; newNode != nil && i < pos-1; i++ {
+		newNode = newNode.next
+	}
+	if newNode == nil || newNode.next == nil {
+		return
+	}
+	newNode2 := new(Node)
+	newNode2 = newNode.next.next
+	newNode.next = newNode2
 }
 
 // ShowNext : Show the item that comes next to given position
@@ -137,7 +157,16 @@ func main() {
 		addNode.body = node
 		MyList.Append(addNode)
 	}
-	fmt.Println("Write the number of what you want to do now: \n 1. Show My List \n 2. Search An Item \n 3. Search What Item is in Given Position \n 4. Show the item that comes next a position \n 5. Show the item that comes before a position \n 6. Show the first iterarion of a Node \n 7. Insert node in given position")
+	fmt.Println(`
+		Write the number of what you want to do now: 
+		1. Show My List 
+		2. Search An Item 
+		3. Search What Item is in Given Position 
+		4. Show the item that comes next a position 
+		5. Show the item that comes before a position 
+		6. Show the first iterarion of a Node 
+		7. Insert node in given position
+		8. Remove a node`)
 	var command int
 	fmt.Scanln(&command)
 	if command == 1 {
@@ -195,6 +224,12 @@ func main() {
 		var pos int
 		fmt.Scanln(&pos)
 		MyList.Insert(node, pos)
+		MyList.Show()
+	} else if command == 8 {
+		fmt.Println("Select a position")
+		var pos int
+		fmt.Scanln(&pos)
+		MyList.RemoveItem(pos)
 		MyList.Show()
 	} else {
 		fmt.Println("Command not Found")
