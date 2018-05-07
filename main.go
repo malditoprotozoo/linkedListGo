@@ -166,6 +166,24 @@ func (list *List) Last() {
 	}
 }
 
+// Backwards : Show the list backwards
+func (list *List) Backwards() {
+	prev := new(Node)
+	prev = nil
+	current := new(Node)
+	current = list.start
+	next := new(Node)
+	next = nil
+	for current != nil {
+		next = current.next
+		current.next = prev
+		prev = current
+		current = next
+	}
+	list.start = prev
+	list.Show()
+}
+
 func main() {
 	MyList := &List{}
 	fmt.Println("How many nodes do you want?")
@@ -191,7 +209,8 @@ func main() {
 		8. Remove a node
 		9. Remove all items
 		10. Show the first node on the list
-		11. Show the position after the last node`)
+		11. Show the position after the last node
+		12. Show the list backwards`)
 	var command int
 	fmt.Scanln(&command)
 	if command == 1 {
@@ -263,6 +282,8 @@ func main() {
 		MyList.First()
 	} else if command == 11 {
 		MyList.Last()
+	} else if command == 12 {
+		MyList.Backwards()
 	} else {
 		fmt.Println("Command not Found")
 	}
