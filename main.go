@@ -206,8 +206,7 @@ func main() {
 			8. Remove a node
 			9. Remove all items
 			10. Show the first node on the list
-			11. Show the position after the last node
-			12. Show the list backwards`)
+			11. Show the position after the last node`)
 		var command int
 		fmt.Scanln(&command)
 		if command == 1 {
